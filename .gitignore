@@ -1,35 +1,53 @@
-# Dependencies
-**/node_modules
-**/package-lock.json
-**/yarn.lock
-**/pnpm-lock.yaml
+# Ignore everything by default
+*
 
-# Build outputs
-**/dist
-**/build
-**/.vite
+# Keep directories
+!*/
 
-# Environment variables
-**/.env
-**/.env.local
-**/.env.*.local
+# Allow essential project files
+!.gitignore
+!README.md
+!package.json
+!postcss.config.js
+!tailwind.config.js
+!vite.config.js
+!index.html
+!eslint.config.js
 
-# Logs
-**/npm-debug.log*
-**/yarn-debug.log*
-**/yarn-error.log*
-**/pnpm-debug.log*
+# Allow .github folder for CI/CD
+!.github/
+!.github/**
 
-# OS specific files
+# Allow frontend source and public files
+!frontend/
+!frontend/**
+!frontend/src/
+!frontend/src/**
+!frontend/public/
+!frontend/public/**
+
+# Allow backend folder structure
+!backend/
+!backend/**
+
+# --- Specific Exclusions (Even if allowed above) ---
+
+# Ignore dependencies and environments
+**/node_modules/
+**/.venv/
+**/venv/
+**/env/
+**/ENV/
+
+# Ignore build artifacts
+**/dist/
+**/.vite/
+**/build/
+
+# Ignore secrets and local environments
+**/.env*
+**/local_settings.py
+
+# Ignore system files
 .DS_Store
 Thumbs.db
-
-# IDE/Editor folders
-.vscode/
-.idea/
-*.swp
-*.swo
-
-# Backend specific
-backend/bin/
-backend/obj/
