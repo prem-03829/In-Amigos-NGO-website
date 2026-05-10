@@ -1,0 +1,149 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary: #2ecc71;
+  --color-primary-dark: #27ae60;
+  --color-secondary: #3498db;
+  --color-dark: #1a1a1a;
+  --color-text: #4a4a4a;
+  --color-text-light: #7a7a7a;
+  --color-bg-light: #f9fafb;
+  --color-white: #ffffff;
+
+  --radius-xl: 12px;
+
+  --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 10px 20px -3px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+
+  --width-container: 1100px;
+
+  --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply font-sans text-text bg-white leading-relaxed antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply text-dark font-bold leading-tight;
+  }
+}
+
+@layer components {
+  /* BorderGlow Tailwind Components */
+  .border-glow-card-standard {
+    --edge-proximity: 0;
+    --cursor-angle: 45deg;
+    --edge-sensitivity: 30;
+    --color-sensitivity: calc(var(--edge-sensitivity) + 20);
+    --border-radius: 12px;
+    --glow-padding: 40px;
+    --cone-spread: 25;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+
+    @apply relative isolation-auto grid overflow-visible transition-all duration-300 shadow-md;
+    border-radius: var(--border-radius);
+    transform: translate3d(0, 0, 0.01px);
+    border: 1px solid rgb(255 255 255 / 15%);
+    background: var(--card-bg, #ffffff);
+  }
+
+  .border-glow-card-standard:hover {
+    @apply -translate-y-1 shadow-lg;
+  }
+
+  .border-glow-card-standard::before,
+  .border-glow-card-standard::after,
+  .border-glow-card-standard > .edge-light-layer {
+    @apply content-[''] absolute inset-0 transition-opacity duration-300 pointer-events-none;
+    border-radius: inherit;
+  }
+
+  .border-glow-card-standard:not(:hover):not(.sweep-active)::before,
+  .border-glow-card-standard:not(:hover):not(.sweep-active)::after,
+  .border-glow-card-standard:not(:hover):not(.sweep-active) > .edge-light-layer {
+    @apply opacity-0 duration-700;
+  }
+
+  /* 1. Spotlight Layer */
+  .border-glow-card-standard::before {
+    background: radial-gradient(
+      600px circle at var(--mouse-x) var(--mouse-y),
+      var(--spotlight-color, rgba(46, 204, 113, 0.1)),
+      transparent 40%
+    );
+    @apply z-0;
+  }
+
+  /* 2. Border Glow Layer */
+  .border-glow-card-standard::after {
+    border: 1px solid transparent;
+    background:
+      linear-gradient(var(--card-bg, #ffffff) 0 100%) padding-box,
+      linear-gradient(rgb(255 255 255 / 0%) 0% 100%) border-box,
+      var(--gradient-one) border-box,
+      var(--gradient-two) border-box,
+      var(--gradient-three) border-box,
+      var(--gradient-four) border-box,
+      var(--gradient-five) border-box,
+      var(--gradient-six) border-box,
+      var(--gradient-seven) border-box,
+      var(--gradient-base) border-box;
+
+    opacity: calc((var(--edge-proximity) - var(--color-sensitivity)) / (100 - var(--color-sensitivity)));
+
+    mask-image:
+      conic-gradient(
+        from var(--cursor-angle) at center,
+        black calc(var(--cone-spread) * 1%),
+        transparent calc((var(--cone-spread) + 15) * 1%),
+        transparent calc((100 - var(--cone-spread) - 15) * 1%),
+        black calc((100 - var(--cone-spread)) * 1%)
+      );
+    @apply z-[1];
+  }
+
+  /* 3. Outer Glow Layer */
+  .border-glow-card-standard > .edge-light-layer {
+    @apply z-[2];
+    inset: calc(var(--glow-padding) * -1);
+    mask-image:
+      conic-gradient(
+        from var(--cursor-angle) at center, black 2.5%, transparent 10%, transparent 90%, black 97.5%
+      );
+
+    opacity: calc((var(--edge-proximity) - var(--edge-sensitivity)) / (100 - var(--edge-sensitivity)));
+    mix-blend-mode: plus-lighter;
+  }
+
+  .border-glow-card-standard > .edge-light-layer::before {
+    @apply content-[''] absolute transition-opacity duration-300;
+    inset: var(--glow-padding);
+    border-radius: inherit;
+    box-shadow:
+      inset 0 0 0 1px var(--glow-color, hsl(145deg 63% 49% / 100%)),
+      inset 0 0 1px 0 var(--glow-color-60, hsl(145deg 63% 49% / 60%)),
+      inset 0 0 3px 0 var(--glow-color-50, hsl(145deg 63% 49% / 50%)),
+      inset 0 0 6px 0 var(--glow-color-40, hsl(145deg 63% 49% / 40%)),
+      inset 0 0 15px 0 var(--glow-color-30, hsl(145deg 63% 49% / 30%)),
+      inset 0 0 25px 2px var(--glow-color-20, hsl(145deg 63% 49% / 20%)),
+      inset 0 0 50px 2px var(--glow-color-10, hsl(145deg 63% 49% / 10%)),
+      0 0 1px 0 var(--glow-color-60, hsl(145deg 63% 49% / 60%)),
+      0 0 3px 0 var(--glow-color-50, hsl(145deg 63% 49% / 50%)),
+      0 0 6px 0 var(--glow-color-40, hsl(145deg 63% 49% / 40%)),
+      0 0 15px 0 var(--glow-color-30, hsl(145deg 63% 49% / 30%)),
+      0 0 25px 2px var(--glow-color-20, hsl(145deg 63% 49% / 20%)),
+      0 0 50px 2px var(--glow-color-10, hsl(145deg 63% 49% / 10%));
+  }
+
+  .border-glow-inner-content {
+    @apply relative flex flex-col overflow-hidden z-[3] h-full w-full;
+  }
+}
