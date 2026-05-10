@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Analytics } from '@vercel/analytics/react';
 import PillNav from './components/PillNav';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -66,6 +67,7 @@ function App() {
     <Router>
       <ScrollToTop />
       <AppContent />
+      <Analytics />
     </Router>
   );
 }
