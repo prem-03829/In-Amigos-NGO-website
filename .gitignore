@@ -6,6 +6,7 @@
 
 # Allow essential project files
 !.gitignore
+!vercel.json
 !README.md
 !package.json
 !postcss.config.js
