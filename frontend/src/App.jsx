@@ -1,6 +1,7 @@
 import { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/react';
 import PillNav from './components/PillNav';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -68,6 +69,7 @@ function App() {
       <ScrollToTop />
       <AppContent />
       <Analytics />
+      <SpeedInsights />
     </Router>
   );
 }
